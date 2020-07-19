@@ -1,0 +1,69 @@
+* 테이블 생성
+
+CREATE TABLE 주문테이블 (
+	주문번호 VARCHAR(16) NOT NULL,
+	고객번호 VARCHAR(16) NOT NULL,
+	주문일 VARCHAR(8) NOT NULL,
+	주문가격 DECIMAL(15, 2) NOT NULL,
+	배송도시 VARCHAR(256),
+	배송완료일 VARCHAR(8),
+	결제금액 VARCHAR(8),
+	할인금액 DECIMAL(15, 2) NOT NULL,
+	적립포인트 DECIMAL(15, 2) NOT NULL,
+	PRIMARY KEY (주문번호)
+);
+
+CREATE TABLE 주문테이블2 AS SELECT * FROM 주문테이블;
+
+
+* 생성한 테이블 확인
+
+SELECT * FROM 주문테이블;
+DESC 주문테이블;
+
+Name				                                Null?		              Type
+-------------------------------------------	---------------------	----------------------------
+주문번호                                     NOT NULL 	           VARCHAR2(16)
+고객번호                                     NOT NULL 	           VARCHAR2(16)
+주문일                                       NOT NULL 	            VARCHAR2(8)
+주문가격				                             NOT NULL 	           NUMBER(15,2)
+배송도시						                                               VARCHAR2(256)
+배송완료일					                                                VARCHAR2(8)
+결제금액						                                               VARCHAR2(8)
+할인금액				                             NOT NULL	             NUMBER(15,2)
+적립포인트			                              NOT NULL	            NUMBER(15,2)
+
+
+* 테이블 구조 변경
+
+ALTER TABLE 주문테이블 MODIFY 배송도시 INT;
+ALTER TABLE 주문테이블 RENAME COLUMN 배송도시 TO 배송도시코드;
+
+Name				                                Null?		              Type
+-------------------------------------------	---------------------	----------------------------
+주문번호				                             NOT NULL 	           VARCHAR2(16)
+고객번호				                             NOT NULL 	           VARCHAR2(16)
+주문일				                                NOT NULL 	            VARCHAR2(8)
+주문가격				                             NOT NULL 	           NUMBER(15,2)
+배송도시코드					                                             NUMBER(38)
+배송완료일					                                                VARCHAR2(8)
+결제금액						                                               VARCHAR2(8)
+할인금액				                             NOT NULL	             NUMBER(15,2)
+적립포인트                                   NOT NULL	            NUMBER(15,2)
+
+
+* 제약조건 변경
+
+CREATE TABLE 도시코드테이블 (
+	CODE INT, 
+	CITY VARCHAR(256) NOT NULL,
+	PRIMARY KEY (CODE)
+);
+
+Name				                                Null?		              Type
+-------------------------------------------	---------------------	----------------------------
+CODE                                      	NOT NULL 	            NUMBER(38)
+CITY                                      	NOT NULL 	            VARCHAR2(256)
+
+ALTER TABLE 주문테이블 ADD CONSTRAINT 도시코드 FOREIGN KEY (배송도시코드) REFERENCES 도시코드테이블 (CODE);
+ALTER TABLE 주문테이블 DROP CONSTRAINT 도시코드;
