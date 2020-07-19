@@ -1,0 +1,38 @@
+* 사용자 계정 추가
+
+CREATE USER super IDENTIFIED BY 1234;
+
+SHOW GRANTS FOR super;
+
+DROP USER super;
+
+
+* 사용자 권한 부여
+
+GRANT ALL ON *.* TO super WITH GRANT OPTION;
+
+GRANT SELECT, UPDATE ON biz.* TO super;
+
+
+* 사용자 권한 회수
+
+REVOKE ALL ON *.* FROM super;
+
+
+* AUTOCOMMIT
+
+SELECT @@AUTOCOMMIT;
+
+SET AUTOCOMMIT = TRUE;
+SET AUTOCOMMIT = FALSE;
+
+
+* 트랜잭션 제어
+
+START TRANSACTION;
+savepoint a;
+INSERT INTO salaries (emp_no, salary, from_date, to_date) VALUES (1002, 900, '2014-07-01', '2015-06-30');
+savepoint b;
+UPDATE salaries SET salary = 1000 WHERE emp_no = 1001;
+rollback to b;
+rollback to a;
