@@ -1,0 +1,56 @@
+* 다중 테이블
+
+SELECT productCode, productName, textDescription
+FROM product t1, productline t2
+WHERE t1.productLine = t2.productLine;;
+
+
+* 내부 조인
+
+SELECT productCode, productName, textDescription
+FROM product t1
+INNER JOIN product t2 ON t1.productLine = t2.productLine;
+
+SELECT productCode, productName, textDescription
+FROM product t1
+INNER JOIN productline t2 USING (productLine);
+
+
+* 자연 조인
+
+SELECT productCode, productName, textDescription
+FROM product t1
+NATURAL JOIN productline t2;
+
+
+* 교차 조인
+
+SELECT productCode, productName, textDescription
+FROM product t1
+CROSS JOIN productline t2;
+
+
+* 외부 조인
+
+SELECT productCode, productName, textDescription
+FROM product t1
+LEFT OUTER JOIN productline t2 ON t1.productLine = t2.productLine;
+
+
+* 서브 쿼리
+
+SELECT productCode, productName
+FROM product
+WHERE productLine NOT IN (SELECT DISTINCT productLine FROM productLine);
+
+SELECT productLine, textDescription
+FROM productline NOT IN (SELECT productLine FROM product);
+
+
+* 집합 연산
+
+SELECT productcode, productname 
+FROM product
+UNION 
+SELECT productLine, textDescription 
+FROM productline;

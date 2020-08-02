@@ -1,0 +1,23 @@
+* 뷰 생성
+
+CREATE VIEW CHECK_LOGIN_VIEW AS SELECT uid, password FROM emp;
+SELECT uid FROM CHECK_LOGIN_VIEW WHERE uid = 'user', password = 'pw';
+
+CREATE VIEW CHECK_WORKPLACE_VIEW AS SELECT uid, name, workplace FROM emp WHERE workplace IN ('서울', '부산');
+CREATE VIEW CHECK_WORKDAY_VIEW (uid, name, joinday, workdays) AS SELECT uid, name, joinday, TO_DATE(NOW() - DATE(joinday)) FROM emp;
+
+
+* 뷰 변경
+
+CREATE VIEW PARTIAL_VIEW (name, position, workplace) AS SELECT name, position, workplace) FROM emp;
+INSERT INTO PARTIAL_VIEW VALUES ('도길동', '대리', '부산');
+
+UPDATE PARTIAL_VIEW SET name = '도길동', position = '대리', workplace = '부산';
+UPDATE PARTIAL_VIEW SET name = '도길동', workplace = '부산' WHERE uid = 1000;
+
+
+* 뷰 삭제
+
+DROP VIEW CHECK_LOGIN_VIEW;
+DROP VIEW CHECK_WORKPLACE_VIEW;
+DROP VIEW CHECK_WORKDAY_VIEW;

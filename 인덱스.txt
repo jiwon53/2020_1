@@ -1,0 +1,17 @@
+* 인덱스 생성
+
+CREATE INDEX 배송도시 ON 주문 (배송도시);
+CREATE INDEX 주문일포인트 ON 주문 (주문일, 적립포인트);
+CREATE UNIQUE INDEX 고객번호 ON 주문 (고객번호);
+
+
+* 인덱스 확인 
+
+SHOW INDEX FROM 주문;
+
+
+* 인덱스 삭제
+
+ALTER TABLE 주문 DROP INDEX 배송도시;
+ALTER TABLE 주문 DROP INDEX 주문일포인트;
+ALTER TABLE 주문 DROP INDEX 고객번호;
