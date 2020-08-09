@@ -1,0 +1,28 @@
+* 트리거
+
+CREATE TABLE tri (
+	id NUMBER NOT NULL,
+	PRIMARY KEY(id)
+);
+
+CREATE SEQUENCE tri_sequence
+START WITH 1
+INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER tri_on_insert
+	BEFORE INSERT ON tri
+	FOR EACH ROW
+BEGIN
+	SELECT tri_sequence.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+INSERT INTO tri (id) VALUES (1);
+
+SELECT * FROM tri;
+        ID
+----------
+         1
+         2
+         3
